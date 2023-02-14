@@ -72,22 +72,26 @@ pub struct SelectionList<'a, T: Copy> {
     paginate: Option<Paginate<'a, T>>,
 }
 
-impl<'a, T: Copy> SelectionList<'a, T> {
-    pub fn new() -> Self {
+impl<'a, T: Copy> Default for SelectionList<'a, T> {
+    fn default() -> Self {
         Self {
             items: Default::default(),
             selected: Default::default(),
             paginate: Default::default(),
         }
     }
+}
 
-    #[allow(unused)]
+impl<'a, T: Copy> SelectionList<'a, T> {
+    pub fn new() -> Self {
+        Self::default()
+    }
+
     pub fn add<S: ToString>(mut self, key: T, text: S) -> Self {
         self.items.push((key, text.to_string()));
         self
     }
 
-    #[allow(unused)]
     pub fn add_list<S: ToString>(mut self, iter: impl Iterator<Item = (T, impl ToString)>) -> Self {
         self.items.extend(iter.map(|(k, s)| (k, s.to_string())));
         self

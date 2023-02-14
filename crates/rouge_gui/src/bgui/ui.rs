@@ -72,7 +72,6 @@ impl<'a> Ui<'a> {
         self.add(Label::from_string(text))
     }
 
-    #[allow(unused)]
     pub fn selection_list<T: Copy>(&mut self) -> UiResult {
         self.add(SelectionList::<T>::new())
     }

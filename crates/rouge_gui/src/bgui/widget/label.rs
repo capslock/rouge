@@ -16,7 +16,6 @@ impl Widget for Label<TextBuilder> {
     fn ui(self, ui: &mut Ui) -> UiResult {
         let mut draw_batch = DrawBatch::new();
 
-        // Estimate the height.
         let height = 1;
 
         let mut block =

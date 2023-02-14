@@ -42,7 +42,6 @@ impl<'a> Window<'a> {
         }
     }
 
-    #[allow(unused)]
     pub fn layout(self, x: AlignX, y: AlignY) -> Self {
         Self {
             layout: Layout::new(x, y),

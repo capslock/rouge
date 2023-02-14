@@ -10,7 +10,7 @@ lazy_static! {
 
 #[instrument(skip(scene, type_registry))]
 pub fn save_scene(filename: &str, scene: DynamicScene, type_registry: &AppTypeRegistry) {
-    let serialized = super::super::serialize::serialize_ron(scene, type_registry);
+    let serialized = super::super::serialize::serialize(scene, type_registry);
     let compressed = super::super::compress::compress(&serialized);
     let encoded = super::super::encode::encode(&compressed);
 
@@ -38,7 +38,7 @@ pub fn load_scene(filename: &str, type_registry: &AppTypeRegistry) -> Option<Dyn
     };
     let serialized = super::super::compress::decompress(&compressed);
 
-    Some(super::super::serialize::deserialize_ron(
+    Some(super::super::serialize::deserialize(
         &serialized,
         type_registry,
     ))

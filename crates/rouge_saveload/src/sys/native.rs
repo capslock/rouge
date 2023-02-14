@@ -10,10 +10,7 @@ use tracing::instrument;
 
 #[instrument(skip(scene, type_registry))]
 pub fn save_scene(filename: &str, scene: DynamicScene, type_registry: &AppTypeRegistry) {
-    #[cfg(feature = "serialize-binary")]
-    let serialized = super::super::serialize::serialize_bincode(scene, type_registry);
-    #[cfg(not(feature = "serialize-binary"))]
-    let serialized = super::super::serialize::serialize_ron(scene, type_registry);
+    let serialized = super::super::serialize::serialize(scene, type_registry);
     let compressed = super::super::compress::compress(&serialized);
 
     let path = Path::new(".").join(filename);
@@ -26,20 +23,10 @@ pub fn load_scene(filename: &str, type_registry: &AppTypeRegistry) -> Option<Dyn
     let path = Path::new(".").join(filename);
     let compressed = fs::read(path).expect("Failed to read save file!");
     let serialized = super::super::compress::decompress(&compressed);
-    #[cfg(feature = "serialize-binary")]
-    {
-        Some(super::super::serialize::deserialize_bincode(
-            &serialized,
-            type_registry,
-        ))
-    }
-    #[cfg(not(feature = "serialize-binary"))]
-    {
-        Some(super::super::serialize::deserialize_ron(
-            &serialized,
-            type_registry,
-        ))
-    }
+    Some(super::super::serialize::deserialize(
+        &serialized,
+        type_registry,
+    ))
 }
 
 #[instrument]

@@ -1,4 +1,4 @@
-use bracket_lib::prelude::*;
+use bracket_lib::terminal::Rect;
 
 use crate::{Context, Interaction, Label, Layout, SelectionList, UiResult, Widget};
 

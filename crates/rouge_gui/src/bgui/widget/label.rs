@@ -1,4 +1,4 @@
-use bracket_lib::prelude::*;
+use bracket_lib::terminal::{DrawBatch, Point, Rect, TextBlock, TextBuilder, WHITE};
 
 use crate::{Ui, UiResult, Widget};
 

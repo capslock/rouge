@@ -1,4 +1,4 @@
-use bracket_lib::prelude::*;
+use bracket_lib::terminal::Rect;
 
 #[derive(Debug)]
 pub struct Layout {

@@ -1,4 +1,4 @@
-use bracket_lib::prelude::*;
+use bracket_lib::terminal::{BTerm, Point, Rect, VirtualKeyCode};
 
 #[derive(Debug)]
 pub struct Context {

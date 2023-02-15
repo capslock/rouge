@@ -1,4 +1,6 @@
-use bracket_lib::prelude::*;
+use bracket_lib::terminal::{
+    ColorPair, DrawBatch, Point, Rect, VirtualKeyCode, BLACK, MAGENTA, RGB, WHITE,
+};
 
 use crate::{AlignX, AlignY, Context, Interaction, Layout, Ui};
 

@@ -1,4 +1,6 @@
-use bracket_lib::prelude::*;
+use bracket_lib::terminal::{
+    letter_to_option, DrawBatch, Rect, TextBuilder, VirtualKeyCode, WHITE, YELLOW,
+};
 
 use crate::{Interaction, Label, Ui, UiResult, Widget};
 

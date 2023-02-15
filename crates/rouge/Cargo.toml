@@ -5,7 +5,14 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[features]
+default = [ "bevy", "gui", "queue", "saveload" ]
+gui = [ "rouge_gui" ]
+queue = [ "rouge_queue" ]
+saveload = [ "rouge_saveload" ]
+bevy = [ "rouge_gui/bevy" ]
+
 [dependencies]
-rouge_gui = { path = "../rouge_gui" }
-rouge_queue = { path = "../rouge_queue" }
-rouge_saveload = { path = "../rouge_saveload" }
+rouge_gui = { path = "../rouge_gui", optional = true }
+rouge_queue = { path = "../rouge_queue", optional = true }
+rouge_saveload = { path = "../rouge_saveload", optional = true }

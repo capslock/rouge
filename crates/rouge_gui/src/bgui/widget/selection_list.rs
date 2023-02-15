@@ -1,6 +1,12 @@
-use bracket_lib::terminal::{
-    letter_to_option, DrawBatch, Rect, TextBuilder, VirtualKeyCode, WHITE, YELLOW,
-};
+#[cfg(feature = "bevy")]
+use bevy_input::prelude::KeyCode;
+#[cfg(feature = "bevy")]
+use bracket_bevy::prelude::{Rect, TextBuilder, WHITE, YELLOW};
+#[cfg(not(feature = "bevy"))]
+use bracket_lib::terminal::{letter_to_option, Rect, TextBuilder, VirtualKeyCode, WHITE, YELLOW};
+
+#[cfg(feature = "bevy")]
+type VirtualKeyCode = KeyCode;
 
 use crate::{Interaction, Label, Ui, UiResult, Widget};
 
@@ -152,9 +158,42 @@ impl<'a, T: Copy> SelectionList<'a, T> {
     }
 }
 
+#[cfg(feature = "bevy")]
+fn letter_to_option(option: VirtualKeyCode) -> i32 {
+    match option {
+        VirtualKeyCode::A => 0,
+        VirtualKeyCode::B => 1,
+        VirtualKeyCode::C => 2,
+        VirtualKeyCode::D => 3,
+        VirtualKeyCode::E => 4,
+        VirtualKeyCode::F => 5,
+        VirtualKeyCode::G => 6,
+        VirtualKeyCode::H => 7,
+        VirtualKeyCode::I => 8,
+        VirtualKeyCode::J => 9,
+        VirtualKeyCode::K => 10,
+        VirtualKeyCode::L => 11,
+        VirtualKeyCode::M => 12,
+        VirtualKeyCode::N => 13,
+        VirtualKeyCode::O => 14,
+        VirtualKeyCode::P => 15,
+        VirtualKeyCode::Q => 16,
+        VirtualKeyCode::R => 17,
+        VirtualKeyCode::S => 18,
+        VirtualKeyCode::T => 19,
+        VirtualKeyCode::U => 20,
+        VirtualKeyCode::V => 21,
+        VirtualKeyCode::W => 22,
+        VirtualKeyCode::X => 23,
+        VirtualKeyCode::Y => 24,
+        VirtualKeyCode::Z => 25,
+        _ => -1,
+    }
+}
+
 impl<'a, T: Copy> Widget for SelectionList<'a, T> {
     fn ui(mut self, ui: &mut Ui) -> UiResult {
-        let mut draw_batch = DrawBatch::new();
+        let draw_batch = ui.ctx.new_draw_batch();
 
         let mut buf = [0; 1];
 
@@ -184,9 +223,7 @@ impl<'a, T: Copy> Widget for SelectionList<'a, T> {
             ui.add(Label::new(text));
         }
 
-        draw_batch
-            .submit(ui.layer)
-            .expect("Failed to submit batch!");
+        ui.ctx.submit_draw_batch(ui.layer, draw_batch);
 
         let interaction = Interaction {
             click: false,

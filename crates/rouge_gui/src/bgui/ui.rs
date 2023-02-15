@@ -2,9 +2,9 @@ use bracket_lib::terminal::Rect;
 
 use crate::{Context, Interaction, Label, Layout, SelectionList, UiResult, Widget};
 
-#[derive(Debug)]
+//#[derive(Debug)]
 pub struct Ui<'a> {
-    pub ctx: &'a mut Context,
+    pub ctx: &'a Context<'a>,
     pub max_rect: Rect,
     pub min_rect: Rect,
     pub cursor: Rect,
@@ -14,7 +14,7 @@ pub struct Ui<'a> {
 
 impl<'a> Ui<'a> {
     pub fn new(
-        ctx: &'a mut Context,
+        ctx: &'a Context<'a>,
         layer: usize,
         min_rect: Rect,
         max_rect: Rect,
@@ -53,12 +53,12 @@ impl<'a> Ui<'a> {
             && rect.point_in_rect(self.ctx.mouse.unwrap())
         {
             interacted.click = true;
-            self.ctx.clicked = false;
-            self.ctx.mouse = None;
+            //self.ctx.clicked = false;
+            //self.ctx.mouse = None;
         }
 
-        if self.ctx.key.is_some() && interaction.keys.contains(&self.ctx.key.unwrap()) {
-            interacted.keys.push(self.ctx.key.take().unwrap());
+        if let Some(key) = self.ctx.any_pressed(interaction.keys.iter().copied()) {
+            interacted.keys.push(key);
         }
 
         interacted

@@ -1,4 +1,7 @@
-use bracket_lib::terminal::{DrawBatch, Point, Rect, TextBlock, TextBuilder, WHITE};
+#[cfg(feature = "bevy")]
+use bracket_bevy::prelude::{Point, Rect, TextBlock, TextBuilder, WHITE};
+#[cfg(not(feature = "bevy"))]
+use bracket_lib::terminal::{Point, Rect, TextBlock, TextBuilder, WHITE};
 
 use crate::{Ui, UiResult, Widget};
 
@@ -14,7 +17,7 @@ impl Label<TextBuilder> {
 
 impl Widget for Label<TextBuilder> {
     fn ui(self, ui: &mut Ui) -> UiResult {
-        let mut draw_batch = DrawBatch::new();
+        let mut draw_batch = ui.ctx.new_draw_batch();
 
         let height = 1;
 
@@ -31,9 +34,8 @@ impl Widget for Label<TextBuilder> {
         let clip_rect = Rect::with_size(0, 0, w, h);
 
         block.render_to_draw_batch_clip(&mut draw_batch, &clip_rect);
-        draw_batch
-            .submit(ui.layer)
-            .expect("Failed to submit batch!");
+
+        ui.ctx.submit_draw_batch(ui.layer, draw_batch);
 
         UiResult::default()
     }
@@ -49,7 +51,7 @@ impl Label<String> {
 
 impl Widget for Label<String> {
     fn ui(self, ui: &mut Ui) -> UiResult {
-        let mut draw_batch = DrawBatch::new();
+        let mut draw_batch = ui.ctx.new_draw_batch();
 
         // Estimate the height.
         let height = self.text.len() / ui.cursor.width() as usize
@@ -73,9 +75,7 @@ impl Widget for Label<String> {
         let clip_rect = Rect::with_size(0, 0, w, h);
 
         block.render_to_draw_batch_clip(&mut draw_batch, &clip_rect);
-        draw_batch
-            .submit(ui.layer)
-            .expect("Failed to submit batch!");
+        ui.ctx.submit_draw_batch(ui.layer, draw_batch);
 
         UiResult::default()
     }

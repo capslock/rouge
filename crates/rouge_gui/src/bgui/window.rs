@@ -1,8 +1,14 @@
-use bracket_lib::terminal::{
-    ColorPair, DrawBatch, Point, Rect, VirtualKeyCode, BLACK, MAGENTA, RGB, WHITE,
-};
+#[cfg(feature = "bevy")]
+use bracket_bevy::prelude::{ColorPair, Point, Rect, BLACK, MAGENTA, RGB, WHITE};
+#[cfg(not(feature = "bevy"))]
+use bracket_lib::terminal::{ColorPair, Point, Rect, VirtualKeyCode, BLACK, MAGENTA, RGB, WHITE};
 
 use crate::{AlignX, AlignY, Context, Interaction, Layout, Ui};
+
+#[cfg(feature = "bevy")]
+use bevy_input::prelude::KeyCode;
+#[cfg(feature = "bevy")]
+type VirtualKeyCode = KeyCode;
 
 pub struct Window<'a> {
     title: String,
@@ -52,7 +58,7 @@ impl<'a> Window<'a> {
     }
 
     pub fn show<R>(self, ctx: &mut Context, add: impl FnOnce(&mut Ui) -> R) -> Option<R> {
-        let mut draw_batch = DrawBatch::new();
+        let mut draw_batch = ctx.new_draw_batch();
 
         let layer = ctx.layer;
 
@@ -125,7 +131,7 @@ impl<'a> Window<'a> {
             ColorPair::new(RGB::named(MAGENTA), RGB::named(BLACK)),
         );
 
-        draw_batch.submit(layer).expect("failed to submit batch!");
+        ctx.submit_draw_batch(ui.layer, draw_batch);
 
         let interaction = Interaction {
             keys: vec![VirtualKeyCode::Space, VirtualKeyCode::Escape],

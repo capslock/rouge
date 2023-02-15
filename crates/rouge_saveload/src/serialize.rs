@@ -1,6 +1,9 @@
 use bevy_app::AppTypeRegistry;
-use bevy_scene::serde::{SceneDeserializer, SceneSerializer};
+use bevy_scene::serde::SceneDeserializer;
+#[cfg(feature = "serialize-binary")]
+use bevy_scene::serde::SceneSerializer;
 use bevy_scene::DynamicScene;
+#[cfg(feature = "serialize-binary")]
 use bincode::Options;
 use serde::de::DeserializeSeed;
 

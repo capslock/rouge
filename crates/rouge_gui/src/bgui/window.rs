@@ -63,7 +63,11 @@ impl<'a> Window<'a> {
         let layer = ctx.layer;
 
         // Add title.
-        let title_length = self.title.len() + 9;
+        let title_length = if self.open.is_some() {
+            self.title.len() + 9
+        } else {
+            self.title.len()
+        };
 
         let pos = if let Some(pos) = self.pos {
             pos
@@ -84,9 +88,9 @@ impl<'a> Window<'a> {
         };
 
         let rect = Rect {
-            x1: pos.x,
+            x1: pos.x + 1,
             x2: ctx.screen_rect.x2,
-            y1: pos.y,
+            y1: pos.y + 1,
             y2: ctx.screen_rect.y2,
         };
 

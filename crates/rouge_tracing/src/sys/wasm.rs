@@ -18,4 +18,6 @@ pub fn init_tracing() {
 
     tracing::subscriber::set_global_default(subscriber.with(layer).with(filter))
         .expect("setting default subscriber failed");
+
+    console_error_panic_hook::set_once();
 }

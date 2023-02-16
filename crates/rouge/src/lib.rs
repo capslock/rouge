@@ -12,3 +12,8 @@ pub mod queue {
 pub mod saveload {
     pub use rouge_saveload::*;
 }
+
+#[cfg(feature = "tracing")]
+pub mod tracing {
+    pub use rouge_tracing::*;
+}

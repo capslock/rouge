@@ -21,6 +21,6 @@ pub fn init_tracing() {
         tracing::subscriber::set_global_default(
             tracing_subscriber::registry().with(tracing_tracy::TracyLayer::new()),
         )
-        .expect("set up the subscriber");
+        .expect("seting default subscriber failed");
     }
 }

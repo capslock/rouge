@@ -125,13 +125,15 @@ impl<'a> Window<'a> {
             ColorPair::new(RGB::named(MAGENTA), RGB::named(BLACK)),
         );
 
-        draw_batch.print_color(
-            Point::new(ui.min_rect.x2 - 7, ui.min_rect.y1 - 1),
-            "ESC [x]",
-            ColorPair::new(RGB::named(MAGENTA), RGB::named(BLACK)),
-        );
+        if self.open.is_some() {
+            draw_batch.print_color(
+                Point::new(ui.min_rect.x2 - 7, ui.min_rect.y1 - 1),
+                "ESC [x]",
+                ColorPair::new(RGB::named(MAGENTA), RGB::named(BLACK)),
+            );
+        }
 
-        ctx.submit_draw_batch(ui.layer, draw_batch);
+        ctx.submit_draw_batch(layer, draw_batch);
 
         let interaction = Interaction {
             keys: vec![VirtualKeyCode::Space, VirtualKeyCode::Escape],

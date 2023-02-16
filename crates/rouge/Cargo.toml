@@ -7,12 +7,14 @@ edition = "2021"
 
 [features]
 default = [ "bevy", "gui", "queue", "saveload" ]
-gui = [ "rouge_gui" ]
-queue = [ "rouge_queue" ]
-saveload = [ "rouge_saveload" ]
-bevy = [ "rouge_gui/bevy" ]
+bevy = [ "rouge_gui?/bevy" ]
+gui = [ "dep:rouge_gui" ]
+queue = [ "dep:rouge_queue" ]
+saveload = [ "dep:rouge_saveload" ]
+tracing = [ "dep:rouge_tracing" ]
 
 [dependencies]
 rouge_gui = { path = "../rouge_gui", optional = true }
 rouge_queue = { path = "../rouge_queue", optional = true }
 rouge_saveload = { path = "../rouge_saveload", optional = true }
+rouge_tracing = { path = "../rouge_tracing", optional = true }

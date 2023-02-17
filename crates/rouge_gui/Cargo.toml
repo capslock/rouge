@@ -6,8 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
-default = ["bevy"]
-bevy = ["bracket-bevy", "bevy_input"]
+default = []
+bevy = ["dep:bracket-bevy", "dep:bevy_input"]
 
 [dependencies]
 bevy_input = { version ="0.9.1", optional = true}

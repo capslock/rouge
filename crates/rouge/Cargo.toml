@@ -7,6 +7,7 @@ edition = "2021"
 
 [features]
 default = [ "bevy", "gui", "queue", "saveload", "tracing" ]
+asset = [ "dep:rouge_asset" ]
 bevy = [ "rouge_gui?/bevy" ]
 gui = [ "dep:rouge_gui" ]
 queue = [ "dep:rouge_queue" ]
@@ -14,6 +15,7 @@ saveload = [ "dep:rouge_saveload" ]
 tracing = [ "dep:rouge_tracing" ]
 
 [dependencies]
+rouge_asset = { path = "../rouge_asset", optional = true }
 rouge_gui = { path = "../rouge_gui", optional = true }
 rouge_queue = { path = "../rouge_queue", optional = true }
 rouge_saveload = { path = "../rouge_saveload", optional = true }

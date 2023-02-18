@@ -75,6 +75,7 @@ pub struct Context<'a> {
     pub mouse: Option<Point>,
     pub clicked: bool,
     pub mouse_button: &'a Input<MouseButton>,
+    pub console: usize,
 }
 
 #[cfg(feature = "bevy")]
@@ -85,6 +86,7 @@ impl<'a> Context<'a> {
         mouse_button: &'a Input<MouseButton>,
         screen_rect: Rect,
         layer: usize,
+        console: usize,
     ) -> Self {
         Self {
             ctx,
@@ -94,6 +96,7 @@ impl<'a> Context<'a> {
             clicked: mouse_button.pressed(MouseButton::Left),
             mouse: Some(ctx.get_mouse_position_for_current_layer()),
             mouse_button,
+            console,
         }
     }
 
@@ -102,7 +105,9 @@ impl<'a> Context<'a> {
     }
 
     pub fn new_draw_batch(&self) -> DrawBatch {
-        self.ctx.new_draw_batch()
+        let mut draw_batch = self.ctx.new_draw_batch();
+        draw_batch.target(self.console);
+        draw_batch
     }
 
     pub fn submit_draw_batch(&self, z_order: usize, batch: DrawBatch) {

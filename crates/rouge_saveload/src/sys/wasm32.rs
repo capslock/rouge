@@ -8,10 +8,16 @@ lazy_static! {
     static ref SAVE_GAME: Mutex<Vec<u8>> = Mutex::new(Vec::new());
 }
 
+use crate::SaveloadError as Error;
+
 #[instrument(skip(scene, type_registry))]
-pub fn save_scene(filename: &str, scene: DynamicScene, type_registry: &AppTypeRegistry) {
-    let serialized = super::super::serialize::serialize(scene, type_registry);
-    let compressed = super::super::compress::compress(&serialized);
+pub fn save_scene(
+    filename: &str,
+    scene: DynamicScene,
+    type_registry: &AppTypeRegistry,
+) -> Result<(), Error> {
+    let serialized = super::super::serialize::serialize(scene, type_registry)?;
+    let compressed = super::super::compress::compress(&serialized)?;
     let encoded = super::super::encode::encode(&compressed);
 
     if let Err(e) = web_sys::window().unwrap().local_storage() {
@@ -23,25 +29,29 @@ pub fn save_scene(filename: &str, scene: DynamicScene, type_registry: &AppTypeRe
             error!("Failed to save game ({} bytes): {:?}", encoded.len(), e);
         }
     }
+    Ok(())
 }
 
 #[instrument(skip(type_registry))]
-pub fn load_scene(filename: &str, type_registry: &AppTypeRegistry) -> Option<DynamicScene> {
+pub fn load_scene(
+    filename: &str,
+    type_registry: &AppTypeRegistry,
+) -> Result<Option<DynamicScene>, Error> {
     let compressed = if let Err(e) = web_sys::window().unwrap().local_storage() {
         warn!("Local storage unavailable: {:?}", e);
         std::mem::take(&mut *SAVE_GAME.lock())
     } else if let Some(local_storage) = web_sys::window().unwrap().local_storage().unwrap() {
         let encoded = local_storage.get(filename).unwrap().unwrap();
-        super::super::encode::decode(&encoded)
+        super::super::encode::decode(&encoded)?
     } else {
-        return None;
+        return Ok(None);
     };
-    let serialized = super::super::compress::decompress(&compressed);
+    let serialized = super::super::compress::decompress(&compressed)?;
 
-    Some(super::super::serialize::deserialize(
+    Ok(Some(super::super::serialize::deserialize(
         &serialized,
         type_registry,
-    ))
+    )?))
 }
 
 #[instrument]
@@ -56,13 +66,18 @@ pub fn does_save_exist() -> bool {
 }
 
 #[instrument]
-pub fn delete_save() {
+pub fn delete_save() -> Result<(), Error> {
     if let Err(e) = web_sys::window().unwrap().local_storage() {
         warn!("Local storage unavailable: {:?}", e);
         std::mem::take(&mut *SAVE_GAME.lock());
-        return;
+        return Ok(());
     }
-    if let Some(local_storage) = web_sys::window().unwrap().local_storage().unwrap() {
+    if let Some(local_storage) = web_sys::window()
+        .unwrap()
+        .local_storage()
+        .map_err(|message| Error::JS { message })?
+    {
         local_storage.remove_item("savegame.scn").unwrap();
     }
+    Ok(())
 }

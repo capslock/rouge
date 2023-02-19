@@ -3,15 +3,17 @@ use flate2::write::ZlibEncoder;
 use flate2::Compression;
 use std::io::prelude::*;
 
-pub fn compress(bytes: &[u8]) -> Vec<u8> {
+use crate::SaveloadError as Error;
+
+pub fn compress(bytes: &[u8]) -> Result<Vec<u8>, Error> {
     let mut e = ZlibEncoder::new(Vec::new(), Compression::default());
-    e.write_all(bytes).expect("failed to write");
-    e.finish().expect("failed to compress")
+    e.write_all(bytes).map_err(Error::from)?;
+    e.finish().map_err(Error::from)
 }
 
-pub fn decompress(bytes: &[u8]) -> Vec<u8> {
+pub fn decompress(bytes: &[u8]) -> Result<Vec<u8>, Error> {
     let mut d = ZlibDecoder::new(bytes);
     let mut data = Vec::new();
-    d.read_to_end(&mut data).unwrap();
-    data
+    d.read_to_end(&mut data).map_err(Error::from)?;
+    Ok(data)
 }

@@ -1,5 +1,3 @@
-use std::sync::Mutex;
-
 use bevy_app::Plugin;
 
 use crate::Queue;

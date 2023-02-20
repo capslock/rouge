@@ -1,4 +1,6 @@
+mod plugin;
 mod sys;
+pub use plugin::*;
 pub use sys::*;
 mod compress;
 #[cfg(target_arch = "wasm32")]

@@ -2,3 +2,6 @@
 resolver = "2"
 members = ["crates/*"]
 default-members = ["crates/rouge"]
+
+[patch.crates-io]
+bevy = { git = "https://github.com/bevyengine/bevy", rev = "e6d60ad24e75a6180208a3e88654d48453c53af7" }

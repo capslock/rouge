@@ -6,7 +6,7 @@ use bracket_lib::terminal::{ColorPair, Point, Rect, VirtualKeyCode, BLACK, MAGEN
 use crate::{AlignX, AlignY, Context, Interaction, Layout, Ui};
 
 #[cfg(feature = "bevy")]
-use bevy_input::prelude::KeyCode;
+use bevy::input::prelude::KeyCode;
 #[cfg(feature = "bevy")]
 type VirtualKeyCode = KeyCode;
 

@@ -1,5 +1,5 @@
 #[cfg(feature = "bevy")]
-use bevy_input::prelude::KeyCode;
+use bevy::input::prelude::KeyCode;
 #[cfg(not(feature = "bevy"))]
 use bracket_lib::terminal::VirtualKeyCode;
 

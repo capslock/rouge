@@ -1,6 +1,6 @@
 use std::marker::PhantomData;
 
-use bevy_ecs::{prelude::*, system::SystemParam};
+use bevy::ecs::{prelude::*, system::SystemParam};
 use crossbeam::queue::SegQueue;
 
 #[derive(Resource)]

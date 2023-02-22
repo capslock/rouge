@@ -1,5 +1,5 @@
 #[cfg(feature = "bevy")]
-use bevy_input::prelude::KeyCode;
+use bevy::input::prelude::KeyCode;
 #[cfg(feature = "bevy")]
 use bracket_bevy::prelude::{Rect, TextBuilder, WHITE, YELLOW};
 #[cfg(not(feature = "bevy"))]

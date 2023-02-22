@@ -1,6 +1,6 @@
-use bevy_app::{AppTypeRegistry, CoreStage, Plugin};
-use bevy_ecs::{entity::EntityMap, prelude::*};
-use bevy_scene::DynamicScene;
+use bevy::app::{AppTypeRegistry, CoreStage, Plugin};
+use bevy::ecs::{entity::EntityMap, prelude::*};
+use bevy::scene::DynamicScene;
 
 use crate::{load_scene, save_scene};
 
@@ -56,7 +56,7 @@ fn load(world: &mut World) {
 pub struct SaveloadPlugin {}
 
 impl Plugin for SaveloadPlugin {
-    fn build(&self, app: &mut bevy_app::App) {
+    fn build(&self, app: &mut bevy::app::App) {
         app.add_system_to_stage(CoreStage::PostUpdate, save.at_end());
         app.add_system_to_stage(CoreStage::PreUpdate, load.at_start());
     }

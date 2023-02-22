@@ -4,8 +4,8 @@ use std::{
     path::Path,
 };
 
-use bevy_app::AppTypeRegistry;
-use bevy_scene::DynamicScene;
+use bevy::app::AppTypeRegistry;
+use bevy::scene::DynamicScene;
 use tracing::instrument;
 
 use crate::SaveloadError as Error;

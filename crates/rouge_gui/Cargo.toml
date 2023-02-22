@@ -7,10 +7,10 @@ edition = "2021"
 
 [features]
 default = []
-bevy = ["dep:bracket-bevy", "dep:bevy_input"]
+bevy = ["dep:bracket-bevy", "dep:bevy"]
 
 [dependencies]
-bevy_input = { version ="0.9.1", optional = true}
+bevy = { version = "~0.9", optional = true}
 bracket-lib = { git = "https://github.com/capslock/bracket-lib", branch = "with-merged-fixes", features = ["bevy", "serde", "threaded"]}
 bracket-bevy = { git = "https://github.com/capslock/bracket-lib", branch = "with-merged-fixes", optional = true }
 object-pool = "0.5.3"

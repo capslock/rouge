@@ -2,9 +2,9 @@
 use std::marker::PhantomData;
 
 #[cfg(feature = "bevy")]
-use bevy_input::prelude::KeyCode;
+use bevy::input::prelude::KeyCode;
 #[cfg(feature = "bevy")]
-use bevy_input::{prelude::MouseButton, Input};
+use bevy::input::{prelude::MouseButton, Input};
 #[cfg(feature = "bevy")]
 use bracket_bevy::DrawBatch;
 #[cfg(feature = "bevy")]

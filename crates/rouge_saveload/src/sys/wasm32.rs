@@ -1,5 +1,5 @@
-use bevy_app::AppTypeRegistry;
-use bevy_scene::DynamicScene;
+use bevy::app::AppTypeRegistry;
+use bevy::scene::DynamicScene;
 use lazy_static::lazy_static;
 use parking_lot::Mutex;
 use tracing::{error, instrument, warn};

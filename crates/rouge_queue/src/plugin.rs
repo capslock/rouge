@@ -24,4 +24,8 @@ impl Plugin for QueuePlugin {
             t(app);
         }
     }
+
+    fn is_unique(&self) -> bool {
+        false
+    }
 }

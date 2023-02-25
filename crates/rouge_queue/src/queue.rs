@@ -24,6 +24,10 @@ impl<T> Queue<T> {
         }
     }
 
+    pub fn is_empty(&self) -> bool {
+        self.q.is_empty()
+    }
+
     pub fn push(&self, value: T) {
         self.q.push(value)
     }
@@ -88,6 +92,10 @@ impl<'w, 's, E> QueueReader<'w, 's, E>
 where
     E: Send + 'static,
 {
+    pub fn is_empty(&self) -> bool {
+        self.queue.is_empty()
+    }
+
     pub fn pop(&self) -> Option<E> {
         self.queue.pop()
     }

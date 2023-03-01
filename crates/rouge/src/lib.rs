@@ -1,3 +1,8 @@
+#[cfg(feature = "asset")]
+pub mod asset {
+    pub use rouge_asset::*;
+}
+
 #[cfg(feature = "gui")]
 pub mod gui {
     pub use rouge_gui::*;

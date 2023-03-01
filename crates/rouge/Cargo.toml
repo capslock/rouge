@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
-default = [ "bevy", "gui", "queue", "saveload", "tracing" ]
+default = [ "asset", "bevy", "gui", "queue", "saveload", "tracing" ]
 asset = [ "dep:rouge_asset" ]
 bevy = [ "rouge_gui?/bevy" ]
 gui = [ "dep:rouge_gui" ]

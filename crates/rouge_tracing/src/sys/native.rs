@@ -6,7 +6,9 @@ pub fn init_tracing() {
         use tracing::Level;
         use tracing_subscriber::{filter, FmtSubscriber};
 
-        let filter = filter::filter_fn(|metadata| !metadata.target().starts_with("bevy"));
+        let filter = filter::filter_fn(|metadata| {
+            *metadata.level() <= Level::WARN || !metadata.target().starts_with("bevy")
+        });
         let subscriber = FmtSubscriber::builder()
             .with_max_level(Level::TRACE)
             .pretty()

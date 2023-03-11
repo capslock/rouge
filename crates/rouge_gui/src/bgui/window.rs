@@ -16,6 +16,7 @@ pub struct Window<'a> {
     pos: Option<Point>,
     layout: Layout,
     width: Option<i32>,
+    color: ColorPair,
 }
 
 impl<'a> Window<'a> {
@@ -26,6 +27,7 @@ impl<'a> Window<'a> {
             pos: None,
             layout: Layout::new(AlignX::Left, AlignY::Top),
             width: None,
+            color: ColorPair::new(WHITE, BLACK),
         }
     }
 
@@ -55,6 +57,10 @@ impl<'a> Window<'a> {
             layout: Layout::new(x, y),
             ..self
         }
+    }
+
+    pub fn color(self, color: ColorPair) -> Self {
+        Self { color, ..self }
     }
 
     pub fn show<R>(self, ctx: &mut Context, add: impl FnOnce(&mut Ui) -> R) -> Option<R> {
@@ -120,7 +126,7 @@ impl<'a> Window<'a> {
                 ui.min_rect.x2 + 1,
                 ui.min_rect.y2 + 1,
             ),
-            ColorPair::new(RGB::named(WHITE), RGB::named(BLACK)),
+            self.color,
         );
 
         draw_batch.print_color(

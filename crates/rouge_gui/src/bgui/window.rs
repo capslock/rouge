@@ -17,6 +17,7 @@ pub struct Window<'a> {
     layout: Layout,
     width: Option<i32>,
     color: ColorPair,
+    title_color: ColorPair,
 }
 
 impl<'a> Window<'a> {
@@ -28,6 +29,7 @@ impl<'a> Window<'a> {
             layout: Layout::new(AlignX::Left, AlignY::Top),
             width: None,
             color: ColorPair::new(WHITE, BLACK),
+            title_color: ColorPair::new(MAGENTA, BLACK),
         }
     }
 
@@ -61,6 +63,13 @@ impl<'a> Window<'a> {
 
     pub fn color(self, color: ColorPair) -> Self {
         Self { color, ..self }
+    }
+
+    pub fn title_color(self, title_color: ColorPair) -> Self {
+        Self {
+            title_color,
+            ..self
+        }
     }
 
     pub fn show<R>(self, ctx: &mut Context, add: impl FnOnce(&mut Ui) -> R) -> Option<R> {
@@ -132,7 +141,7 @@ impl<'a> Window<'a> {
         draw_batch.print_color(
             Point::new(ui.min_rect.x1, ui.min_rect.y1 - 1),
             &self.title,
-            ColorPair::new(RGB::named(MAGENTA), RGB::named(BLACK)),
+            self.title_color,
         );
 
         if self.open.is_some() {

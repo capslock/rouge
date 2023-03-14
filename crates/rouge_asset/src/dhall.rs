@@ -3,6 +3,7 @@ use bevy::app::{App, Plugin};
 use bevy::asset::{AddAsset, Asset, AssetLoader, BoxedFuture, LoadContext, LoadedAsset};
 use std::marker::PhantomData;
 
+/// Plugin that loads assets of type `A` from a dhall file.
 pub struct DhallAssetPlugin<A> {
     _marker: PhantomData<A>,
 }

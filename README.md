@@ -12,12 +12,15 @@ Meta-crate that includes all of the other sub-crates.
 
 #### Features
 
-* `default`: enables the `asset`, `bevy`, `gui`, `queue`, `saveload`, `tracing` features.
+* `default`: enables the `asset`, `bevy`, `gui`, `queue`, `saveload`,
+  `serialize_binary`, `tracing` features.
 * `asset`: enables the `rouge_asset` crate.
 * `bevy`: enables the `bevy` feature for `rouge_gui`.
 * `gui`: enables the `rouge_gui` crate.
 * `queue`: enables the `rouge_queue` crate
 * `saveload`: enables the `rouge_saveload` crate.
+* `serialize-binary`: enables the `serialize-binary` feature for
+  `rouge_saveload`.
 * `tracing`: enables the `rouge_tracing` crate.
 
 ### rouge_asset

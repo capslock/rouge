@@ -6,17 +6,18 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
-default = [ "asset", "bevy", "gui", "queue", "saveload", "tracing" ]
+default = [ "asset", "bevy", "gui", "queue", "saveload", "serialize-binary", "tracing" ]
 asset = [ "dep:rouge_asset" ]
 bevy = [ "rouge_gui?/bevy" ]
 gui = [ "dep:rouge_gui" ]
 queue = [ "dep:rouge_queue" ]
 saveload = [ "dep:rouge_saveload" ]
+serialize-binary = [ "rouge_saveload?/serialize-binary" ]
 tracing = [ "dep:rouge_tracing" ]
 
 [dependencies]
 rouge_asset = { path = "../rouge_asset", optional = true }
 rouge_gui = { path = "../rouge_gui", optional = true }
 rouge_queue = { path = "../rouge_queue", optional = true }
-rouge_saveload = { path = "../rouge_saveload", optional = true }
+rouge_saveload = { path = "../rouge_saveload", optional = true, default_features = false }
 rouge_tracing = { path = "../rouge_tracing", optional = true }

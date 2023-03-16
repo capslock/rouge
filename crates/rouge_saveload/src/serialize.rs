@@ -9,6 +9,7 @@ use serde::de::DeserializeSeed;
 
 use crate::SaveloadError as Error;
 
+/// Serialize a bevy `DynamicScene` to a `Vec<u8>`.
 #[cfg(not(feature = "serialize-binary"))]
 pub fn serialize(scene: DynamicScene, type_registry: &AppTypeRegistry) -> Vec<u8> {
     scene
@@ -18,6 +19,7 @@ pub fn serialize(scene: DynamicScene, type_registry: &AppTypeRegistry) -> Vec<u8
         .to_owned()
 }
 
+/// Deserialize a bevy `DynamicScene` from a byte slice.
 #[cfg(not(feature = "serialize-binary"))]
 pub fn deserialize(bytes: &[u8], type_registry: &AppTypeRegistry) -> DynamicScene {
     let scene_deserializer = SceneDeserializer {
@@ -30,12 +32,14 @@ pub fn deserialize(bytes: &[u8], type_registry: &AppTypeRegistry) -> DynamicScen
         .expect("Failed to deserialize scene!")
 }
 
+/// Serialize a bevy `DynamicScene` to a `Vec<u8>`.
 #[cfg(feature = "serialize-binary")]
 pub fn serialize(scene: DynamicScene, type_registry: &AppTypeRegistry) -> Result<Vec<u8>, Error> {
     let serializer = SceneSerializer::new(&scene, type_registry);
     bincode::serialize(&serializer).map_err(|source| Error::Serialize(source.into()))
 }
 
+/// Deserialize a bevy `DynamicScene` from a byte slice.
 #[cfg(feature = "serialize-binary")]
 pub fn deserialize(bytes: &[u8], type_registry: &AppTypeRegistry) -> Result<DynamicScene, Error> {
     let scene_deserializer = SceneDeserializer {

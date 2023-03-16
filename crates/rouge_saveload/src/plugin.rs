@@ -4,6 +4,11 @@ use bevy::scene::DynamicScene;
 
 use crate::{load_scene, save_scene};
 
+/// Flag resource that indicates that the game should be saved.
+///
+/// To save the game, insert a `SaveLoadState` resource with the value
+/// [`SaveLoadState::Save`]. To load a save, insert the value
+/// [`SaveLoadState::Load`].
 #[derive(Resource)]
 pub enum SaveLoadState {
     Save,
@@ -53,6 +58,12 @@ fn load(world: &mut World) {
     }
 }
 
+/// Plugin that implements a save/load system.
+///
+/// To save the game, insert a [`SaveLoadState`] resource with the value
+/// [`SaveLoadState::Save`]. To load a save, insert the value
+/// [`SaveLoadState::Load`].
+#[derive(Default)]
 pub struct SaveloadPlugin {}
 
 impl Plugin for SaveloadPlugin {

@@ -13,6 +13,7 @@ use thiserror::Error;
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::JsValue;
 
+/// Various types of failures that can happen during saving or loading.
 #[derive(Debug, Error)]
 pub enum SaveloadError {
     #[error("Failed to serialize save data")]

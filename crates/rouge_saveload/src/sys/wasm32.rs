@@ -10,6 +10,7 @@ lazy_static! {
 
 use crate::SaveloadError as Error;
 
+/// Save a bevy `DynamicScene` to the file at the given `filename`.
 #[instrument(skip(scene, type_registry))]
 pub fn save_scene(
     filename: &str,
@@ -32,6 +33,7 @@ pub fn save_scene(
     Ok(())
 }
 
+/// Load a bevy `DynamicScene` from the file at the given `filename`.
 #[instrument(skip(type_registry))]
 pub fn load_scene(
     filename: &str,
@@ -54,6 +56,7 @@ pub fn load_scene(
     )?))
 }
 
+/// Tests for the existence of a save file.
 #[instrument]
 pub fn does_save_exist() -> bool {
     if let Err(_e) = web_sys::window().unwrap().local_storage() {
@@ -65,6 +68,7 @@ pub fn does_save_exist() -> bool {
     false
 }
 
+/// Deletes a save file.
 #[instrument]
 pub fn delete_save() -> Result<(), Error> {
     if let Err(e) = web_sys::window().unwrap().local_storage() {

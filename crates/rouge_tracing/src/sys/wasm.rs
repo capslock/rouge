@@ -3,6 +3,7 @@ use tracing_subscriber::fmt::time::UtcTime;
 use tracing_subscriber::{filter, prelude::*, FmtSubscriber};
 use tracing_wasm::{WASMLayer, WASMLayerConfigBuilder};
 
+/// Initialize tracing and configure subscribers.
 pub fn init_tracing() {
     let config = WASMLayerConfigBuilder::default().build();
     let layer = WASMLayer::new(config);

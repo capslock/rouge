@@ -1,5 +1,6 @@
 use tracing_subscriber::prelude::*;
 
+/// Initialize tracing and configure subscribers.
 pub fn init_tracing() {
     #[cfg(not(feature = "profile"))]
     {

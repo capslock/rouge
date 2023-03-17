@@ -5,6 +5,9 @@ needs some work to adapt it to particular use-cases, but it does handle several
 corner-cases of `wasm` saveload handling such that I found it useful to pull out
 into a separate crate. Can be used with full Bevy or just `bevy_ecs`.
 
+Use the plugin to add pre-made save/load systems if using with a Bevy app, or
+call `save_scene`/`load_scene` manually to save/load.
+
 Can serialize into either a text format (via Bevy's inbuilt support for
 [ron](https://crates.io/crates/ron)) or binary (via
 [bincode](https://crates.io/crates/bincode)).

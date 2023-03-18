@@ -5,11 +5,13 @@ use bracket_lib::terminal::{Point, Rect, TextBlock, TextBuilder, WHITE};
 
 use crate::{Ui, UiResult, Widget};
 
+/// A simple label widget.
 pub struct Label<T> {
     text: T,
 }
 
 impl Label<TextBuilder> {
+    /// Create a new `Label` with content specified by a `TextBuilder`.
     pub fn new(text: TextBuilder) -> Self {
         Self { text }
     }
@@ -42,6 +44,7 @@ impl Widget for Label<TextBuilder> {
 }
 
 impl Label<String> {
+    /// Create a new `Label` from a string.
     pub fn from_string<T: ToString>(text: T) -> Self {
         Self {
             text: text.to_string(),

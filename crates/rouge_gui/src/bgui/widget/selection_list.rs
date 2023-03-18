@@ -10,6 +10,7 @@ type VirtualKeyCode = KeyCode;
 
 use crate::{Interaction, Label, Ui, UiResult, Widget};
 
+/// A widget that paginates a list of items.
 pub struct Paginate<'a, T: Copy> {
     items: Vec<(T, String)>,
     paginate: usize,
@@ -18,6 +19,8 @@ pub struct Paginate<'a, T: Copy> {
 }
 
 impl<'a, T: Copy> Paginate<'a, T> {
+    /// Create a new `Paginate` widget with the given list of items and `paginate`
+    /// count.
     pub fn new(
         items: impl Iterator<Item = (T, impl ToString)>,
         paginate: usize,
@@ -43,6 +46,7 @@ impl<'a, T: Copy> Paginate<'a, T> {
         }
     }
 
+    /// Get an iterator to the items on the current page.
     pub fn items(&self) -> impl Iterator<Item = &(T, String)> {
         self.items.iter()
     }
@@ -74,6 +78,7 @@ impl<'a, T: Copy> Widget for Paginate<'a, T> {
     }
 }
 
+/// A widget which displays a list of options that can be selected.
 pub struct SelectionList<'a, T: Copy> {
     items: Vec<(T, String)>,
     selected: Option<&'a mut Option<T>>,
@@ -91,20 +96,24 @@ impl<'a, T: Copy> Default for SelectionList<'a, T> {
 }
 
 impl<'a, T: Copy> SelectionList<'a, T> {
+    /// Create a new `SelectionList` widget.
     pub fn new() -> Self {
         Self::default()
     }
 
+    /// Add a single option to the list.
     pub fn add<S: ToString>(mut self, key: T, text: S) -> Self {
         self.items.push((key, text.to_string()));
         self
     }
 
+    /// Add multiple options to the list.
     pub fn add_list<S: ToString>(mut self, iter: impl Iterator<Item = (T, impl ToString)>) -> Self {
         self.items.extend(iter.map(|(k, s)| (k, s.to_string())));
         self
     }
 
+    /// Provide a `selection` parameter that will hold the user's selection, if any.
     pub fn selected(self, selection: &'a mut Option<T>) -> Self {
         Self {
             selected: Some(selection),
@@ -112,6 +121,7 @@ impl<'a, T: Copy> SelectionList<'a, T> {
         }
     }
 
+    /// Paginate the list.
     pub fn paginate(
         self,
         items: impl Iterator<Item = (T, impl ToString)>,

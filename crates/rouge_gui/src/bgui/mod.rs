@@ -12,6 +12,7 @@ pub use ui::*;
 pub use widget::*;
 pub use window::*;
 
+/// The result of adding a [`Widget`] to a [`Ui`].
 #[derive(Debug, Default)]
 pub struct UiResult {
     pub changed: bool,

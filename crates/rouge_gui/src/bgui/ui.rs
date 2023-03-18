@@ -2,7 +2,7 @@ use bracket_lib::terminal::Rect;
 
 use crate::{Context, Interaction, Label, Layout, SelectionList, UiResult, Widget};
 
-//#[derive(Debug)]
+/// A struct that manages the current UI.
 pub struct Ui<'a> {
     pub ctx: &'a Context<'a>,
     pub max_rect: Rect,
@@ -13,6 +13,8 @@ pub struct Ui<'a> {
 }
 
 impl<'a> Ui<'a> {
+    /// Create a new `Ui`. Usually doesn't need to be called manually as a `Ui` will
+    /// be provided for you.
     pub fn new(
         ctx: &'a Context<'a>,
         layer: usize,
@@ -35,6 +37,7 @@ impl<'a> Ui<'a> {
         }
     }
 
+    /// Allocate some space in the current Ui.
     pub fn allocate(&mut self, x: i32, y: i32) -> Rect {
         let rect = self.layout.allocate_aligned(self.cursor, x, y);
         self.cursor.y1 = rect.y2;
@@ -45,6 +48,9 @@ impl<'a> Ui<'a> {
         rect
     }
 
+    /// Specify an interaction in the current Ui. Specifying `rect` allows for
+    /// mouse clicks to be captured in a specific area. `interaction` specifies
+    /// which kind of interactions should be tested.
     pub fn interact(&mut self, rect: Rect, interaction: Interaction) -> Interaction {
         let mut interacted = Interaction::default();
         if interaction.click
@@ -64,14 +70,17 @@ impl<'a> Ui<'a> {
         interacted
     }
 
+    /// Add a [`Widget`] to the `Ui`.
     pub fn add(&mut self, widget: impl Widget) -> UiResult {
         widget.ui(self)
     }
 
+    /// Add a [`Label`] widget to the `Ui`.
     pub fn label<T: ToString>(&mut self, text: T) -> UiResult {
         self.add(Label::from_string(text))
     }
 
+    /// Add a [`SelectionList`] widget to the `Ui`.
     pub fn selection_list<T: Copy>(&mut self) -> UiResult {
         self.add(SelectionList::<T>::new())
     }

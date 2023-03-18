@@ -17,6 +17,7 @@ use bracket_lib::terminal::{BTerm, DrawBatch, Point, Rect, VirtualKeyCode};
 #[cfg(not(feature = "bevy"))]
 use object_pool::Reusable;
 
+/// Contains the context for the GUI.
 #[cfg(not(feature = "bevy"))]
 #[derive(Debug)]
 pub struct Context<'a> {
@@ -30,6 +31,7 @@ pub struct Context<'a> {
 
 #[cfg(not(feature = "bevy"))]
 impl<'a> Context<'a> {
+    /// Create a new context.
     pub fn new(ctx: &BTerm, screen_rect: Rect, layer: usize) -> Self {
         Self {
             screen_rect,
@@ -41,6 +43,7 @@ impl<'a> Context<'a> {
         }
     }
 
+    /// Test if any of the given keys were pressed.
     pub fn any_pressed(
         &self,
         inputs: impl IntoIterator<Item = VirtualKeyCode>,
@@ -56,17 +59,19 @@ impl<'a> Context<'a> {
         }
     }
 
+    /// Create a new draw batch with the given context.
     pub fn new_draw_batch(&self) -> Reusable<DrawBatch> {
         DrawBatch::new()
     }
 
+    /// Submit ithe provided draw batch.
     pub fn submit_draw_batch(&self, z_order: usize, mut batch: Reusable<DrawBatch>) {
         batch.submit(z_order).expect("Failed to submit batch");
     }
 }
 
+/// Contains the context for the GUI.
 #[cfg(feature = "bevy")]
-//#[derive(Debug)]
 pub struct Context<'a> {
     pub ctx: &'a BracketContext,
     pub screen_rect: Rect,
@@ -80,6 +85,7 @@ pub struct Context<'a> {
 
 #[cfg(feature = "bevy")]
 impl<'a> Context<'a> {
+    /// Create a new context.
     pub fn new(
         ctx: &'a BracketContext,
         keys: &'a Input<KeyCode>,
@@ -100,16 +106,19 @@ impl<'a> Context<'a> {
         }
     }
 
+    /// Test if any of the given keys were pressed.
     pub fn any_pressed(&self, inputs: impl IntoIterator<Item = KeyCode>) -> Option<KeyCode> {
         inputs.into_iter().find(|k| self.keys.pressed(*k))
     }
 
+    /// Create a new draw batch with the given context.
     pub fn new_draw_batch(&self) -> DrawBatch {
         let mut draw_batch = self.ctx.new_draw_batch();
         draw_batch.target(self.console);
         draw_batch
     }
 
+    /// Submit ithe provided draw batch.
     pub fn submit_draw_batch(&self, z_order: usize, batch: DrawBatch) {
         self.ctx.submit_batch(z_order, batch);
     }

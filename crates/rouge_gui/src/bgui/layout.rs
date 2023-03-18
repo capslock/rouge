@@ -1,5 +1,6 @@
 use bracket_lib::terminal::Rect;
 
+/// Specifies the layout of [`Widget`]s in a container.
 #[derive(Debug)]
 pub struct Layout {
     x: AlignX,
@@ -7,10 +8,14 @@ pub struct Layout {
 }
 
 impl Layout {
+    /// Create a new layout with the given alignments.
     pub fn new(x: AlignX, y: AlignY) -> Self {
         Self { x, y }
     }
 
+    /// Allocates some space in `containing_rect` according to the given
+    /// alignments. `x` and `y` specify how much space should be allocated in
+    /// their respective dimensions.
     pub fn allocate_aligned(&self, containing_rect: Rect, x: i32, y: i32) -> Rect {
         let mut rect = Rect::default();
         match self.x {
@@ -47,6 +52,7 @@ impl Layout {
     }
 }
 
+/// Alignment in the `X` dimension.
 #[allow(unused)]
 #[derive(Debug)]
 pub enum AlignX {
@@ -55,6 +61,7 @@ pub enum AlignX {
     Center,
 }
 
+/// Alignment in the `Y` dimension.
 #[allow(unused)]
 #[derive(Debug)]
 pub enum AlignY {

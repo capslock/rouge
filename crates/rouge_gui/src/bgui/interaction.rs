@@ -6,6 +6,7 @@ use bracket_lib::terminal::VirtualKeyCode;
 #[cfg(feature = "bevy")]
 type VirtualKeyCode = KeyCode;
 
+/// Specifies what kind of interaction has occurred or should occur.
 #[derive(Debug, Default)]
 pub struct Interaction {
     pub keys: Vec<VirtualKeyCode>,

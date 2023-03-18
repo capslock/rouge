@@ -10,6 +10,9 @@ use bevy::input::prelude::KeyCode;
 #[cfg(feature = "bevy")]
 type VirtualKeyCode = KeyCode;
 
+/// A window with a border that may be positioned anywhere on the screen and
+/// filled with widgets. Automatically expands horizontally and vertically to
+/// acommodate the content.
 pub struct Window<'a> {
     title: String,
     open: Option<&'a mut bool>,
@@ -21,6 +24,7 @@ pub struct Window<'a> {
 }
 
 impl<'a> Window<'a> {
+    /// Create a new window with the given title.
     pub fn new<S: ToString>(title: S) -> Self {
         Self {
             title: title.to_string(),
@@ -33,6 +37,8 @@ impl<'a> Window<'a> {
         }
     }
 
+    /// Add a flag that indicates if the window should be open. If the user
+    /// closes the window, this flag will be modified.
     pub fn open(self, open: &'a mut bool) -> Self {
         Self {
             open: Some(open),
@@ -40,6 +46,8 @@ impl<'a> Window<'a> {
         }
     }
 
+    /// Set the position of the window. This indicates where the upper-left
+    /// corner of the window should be.
     pub fn pos(self, point: Point) -> Self {
         Self {
             pos: Some(point),
@@ -47,6 +55,7 @@ impl<'a> Window<'a> {
         }
     }
 
+    /// Specify a fixed minimum width for the window.
     pub fn width(self, width: i32) -> Self {
         Self {
             width: Some(width),
@@ -54,6 +63,7 @@ impl<'a> Window<'a> {
         }
     }
 
+    /// Specify how the window should be layed out.
     pub fn layout(self, x: AlignX, y: AlignY) -> Self {
         Self {
             layout: Layout::new(x, y),
@@ -61,10 +71,12 @@ impl<'a> Window<'a> {
         }
     }
 
+    /// Specify the color of the window decorations.
     pub fn color(self, color: ColorPair) -> Self {
         Self { color, ..self }
     }
 
+    /// Specify the color of the title.
     pub fn title_color(self, title_color: ColorPair) -> Self {
         Self {
             title_color,
@@ -72,6 +84,8 @@ impl<'a> Window<'a> {
         }
     }
 
+    /// Call to display the window. The `add` parameter should specify a
+    /// function that adds widgets to the window.
     pub fn show<R>(self, ctx: &mut Context, add: impl FnOnce(&mut Ui) -> R) -> Option<R> {
         let mut draw_batch = ctx.new_draw_batch();
 

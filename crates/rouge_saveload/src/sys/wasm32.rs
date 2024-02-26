@@ -1,4 +1,4 @@
-use bevy::app::AppTypeRegistry;
+use bevy::ecs::reflect::AppTypeRegistry;
 use bevy::scene::DynamicScene;
 use lazy_static::lazy_static;
 use parking_lot::Mutex;

@@ -4,7 +4,7 @@ use std::{
     path::Path,
 };
 
-use bevy::app::AppTypeRegistry;
+use bevy::ecs::reflect::AppTypeRegistry;
 use bevy::scene::DynamicScene;
 use tracing::instrument;
 

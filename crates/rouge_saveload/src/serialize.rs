@@ -1,4 +1,4 @@
-use bevy::app::AppTypeRegistry;
+use bevy::ecs::reflect::AppTypeRegistry;
 use bevy::scene::serde::SceneDeserializer;
 #[cfg(feature = "serialize-binary")]
 use bevy::scene::serde::SceneSerializer;

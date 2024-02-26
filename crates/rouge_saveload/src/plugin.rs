@@ -1,4 +1,4 @@
-use bevy::ecs::{entity::EntityMap, prelude::*};
+use bevy::ecs::entity::EntityHashMap;
 use bevy::prelude::*;
 use bevy::scene::DynamicScene;
 
@@ -21,7 +21,7 @@ fn save(world: &mut World) {
         Some(SaveLoadState::Save)
     ) {
         let type_registry = world.resource::<AppTypeRegistry>();
-        let scene = DynamicScene::from_world(world, type_registry);
+        let scene = DynamicScene::from_world(world);
 
         save_scene("savegame.scn", scene, type_registry).expect("Failed to save game!");
 
@@ -48,7 +48,7 @@ fn load(world: &mut World) {
             }
         };
 
-        let mut entity_map = EntityMap::default();
+        let mut entity_map = EntityHashMap::default();
 
         scene
             .write_to_world(world, &mut entity_map)
@@ -68,7 +68,7 @@ pub struct SaveloadPlugin {}
 
 impl Plugin for SaveloadPlugin {
     fn build(&self, app: &mut bevy::app::App) {
-        app.add_system(save.in_base_set(CoreSet::PostUpdate));
-        app.add_system(load.in_base_set(CoreSet::PreUpdate));
+        app.add_systems(PostUpdate, save);
+        app.add_systems(PreUpdate, load);
     }
 }

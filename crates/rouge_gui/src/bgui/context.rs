@@ -4,7 +4,7 @@ use std::marker::PhantomData;
 #[cfg(feature = "bevy")]
 use bevy::input::prelude::KeyCode;
 #[cfg(feature = "bevy")]
-use bevy::input::{prelude::MouseButton, Input};
+use bevy::input::{prelude::MouseButton, ButtonInput};
 #[cfg(feature = "bevy")]
 use bracket_bevy::DrawBatch;
 #[cfg(feature = "bevy")]
@@ -76,10 +76,10 @@ pub struct Context<'a> {
     pub ctx: &'a BracketContext,
     pub screen_rect: Rect,
     pub layer: usize,
-    pub keys: &'a Input<KeyCode>,
+    pub keys: &'a ButtonInput<KeyCode>,
     pub mouse: Option<Point>,
     pub clicked: bool,
-    pub mouse_button: &'a Input<MouseButton>,
+    pub mouse_button: &'a ButtonInput<MouseButton>,
     pub console: usize,
 }
 
@@ -88,8 +88,8 @@ impl<'a> Context<'a> {
     /// Create a new context.
     pub fn new(
         ctx: &'a BracketContext,
-        keys: &'a Input<KeyCode>,
-        mouse_button: &'a Input<MouseButton>,
+        keys: &'a ButtonInput<KeyCode>,
+        mouse_button: &'a ButtonInput<MouseButton>,
         screen_rect: Rect,
         layer: usize,
         console: usize,

@@ -56,7 +56,7 @@ impl<'a> Ui<'a> {
         if interaction.click
             && self.ctx.clicked
             && self.ctx.mouse.is_some()
-            && rect.point_in_rect(self.ctx.mouse.unwrap())
+            && rect.point_in_rect(self.ctx.mouse.unwrap().into())
         {
             interacted.click = true;
             //self.ctx.clicked = false;

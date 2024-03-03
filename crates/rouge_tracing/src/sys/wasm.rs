@@ -4,11 +4,11 @@ use tracing_subscriber::{filter, prelude::*, FmtSubscriber};
 use tracing_wasm::{WASMLayer, WASMLayerConfigBuilder};
 
 /// Initialize tracing and configure subscribers.
-pub fn init_tracing() {
+pub fn init_tracing(name: String) {
     let config = WASMLayerConfigBuilder::default().build();
     let layer = WASMLayer::new(config);
 
-    let filter = filter::filter_fn(|metadata| !metadata.target().starts_with("bevy"));
+    let filter = filter::filter_fn(move |metadata| metadata.target().starts_with(&name));
     let subscriber = FmtSubscriber::builder()
         .with_max_level(Level::TRACE)
         .with_ansi(false)

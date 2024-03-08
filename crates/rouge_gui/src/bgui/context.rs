@@ -99,7 +99,7 @@ impl<'a> Context<'a> {
             screen_rect,
             layer,
             keys,
-            clicked: mouse_button.pressed(MouseButton::Left),
+            clicked: mouse_button.just_pressed(MouseButton::Left),
             mouse: Some(ctx.get_mouse_position_for_current_layer()),
             mouse_button,
             console,
@@ -108,7 +108,7 @@ impl<'a> Context<'a> {
 
     /// Test if any of the given keys were pressed.
     pub fn any_pressed(&self, inputs: impl IntoIterator<Item = KeyCode>) -> Option<KeyCode> {
-        inputs.into_iter().find(|k| self.keys.pressed(*k))
+        inputs.into_iter().find(|k| self.keys.just_pressed(*k))
     }
 
     /// Create a new draw batch with the given context.
